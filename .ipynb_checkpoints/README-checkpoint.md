@@ -20,7 +20,14 @@ Github repository at: [https://github.com/alyssahondrade/sqlalchemy-challenge.gi
 
 
 ### Repository Structure
+Source code:
+- [`app.py`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/app.py) contains...
+- [`climate_starter.ipynb`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/climate_starter.ipynb) contains...
 
+`Resources` directory contains:
+- [`hawaii.sqlite`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii.sqlite) is the database.
+- [`hawaii_measurements.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_measurements.csv) contains...
+- [`hawaii_stations.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_stations.csv) contains...
 
 ### Dataset
 The dataset is provided by the bootcamp, sourced from:
