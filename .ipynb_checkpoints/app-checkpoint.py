@@ -1,3 +1,4 @@
+
 from flask import Flask, jsonify
 
 from sqlalchemy.ext.automap import automap_base
@@ -16,20 +17,33 @@ Base = automap_base()
 Base.prepare(autoload_with = engine)
 
 # Save references to the respective table
-measurement = Base.classes.measurement
-station = Base.classes.station
+measurement_ref = Base.classes.measurement
+station_ref = Base.classes.station
 
 # Create a database session object
 session = Session(bind=engine)
 
-### Precipitation Analysis ###
+### HELPER FUNCTION: calculate year_ago ###
+def year_ago():
+    # Find the most recent date in the dataset
+    latest_date = session.query(func.max(measurement_ref.date)).one()
 
-### Station Analysis ###
+    # Parse the latest date, to create a datetime object
+    date_string = latest_date[0].split('-')
+    dt_date = dt.datetime(
+        int(date_string[0]),
+        int(date_string[1]),
+        int(date_string[2]))
 
+    # Calculate the date one year from the last date in the dataset
+    year_from_latest = dt_date - dt.timedelta(days=366)
+
+    return year_from_latest
 
 
 ### Flask Setup ###
 app = Flask(__name__)
+
 
 ### Flask Routes ###
 @app.route("/")
@@ -37,39 +51,29 @@ def homepage():
     return(
         f"Welcome to the Honolulu Climate API!<br/><br/>"
         f"Available routes:<br/>"
-        f"/api/v1.0/precipitation/<br/>"
-        f"/api/v1.0/stations/<br/>"
+        f"/api/v1.0/precipitation<br/>"
+        f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/&ltstart&gt<br/>"
         f"/api/v1.0/&ltend&gt<br/>"
     )
 
-@app.route("/api/v1.0/precipitation/")
+@app.route("/api/v1.0/precipitation")
 def precipitation():
-    # Calculate the date one year from the last date in the dataset.
-    latest_date = session.query(func.max(measurement.date)).one()
-
-    date_string = latest_date[0].split('-')
-    dt_date = dt.datetime(
-        int(date_string[0]),
-        int(date_string[1]),
-        int(date_string[2]))
-    
-    year_ago = dt_date - dt.timedelta(days=366)
-
     # Query to retrieve the date and preceiptation scores
-    precipitation = session.query(measurement.date, measurement.prcp).\
-        filter(measurement.date >= year_ago).all()
+    precipitation = session.query(
+        measurement_ref.date, measurement_ref.prcp).\
+        filter(measurement_ref.date >= year_ago()).all()
 
     # Convert the query results to a dictionary
     prcp_dict = [{value[0]: value[1]} for value in precipitation]
 
     return jsonify(prcp_dict)
 
-@app.route("/api/v1.0/stations/")
+@app.route("/api/v1.0/stations")
 def stations():
     # Query to get data of all the stations in the database
-    station_data = session.query(station).all()
+    station_data = session.query(station_ref).all()
 
     # Convert query results to a dictionary
     station_dict = [{
@@ -81,6 +85,25 @@ def stations():
         'Elevation': value.elevation} for value in station_data]
 
     return jsonify(station_dict)
+
+@app.route("/api/v1.0/tobs")
+def tobs():
+    # Query to find the most active station for the previous year
+    active_stations = session.query(
+        measurement_ref.station, func.count(measurement_ref.id)).\
+        group_by(measurement_ref.station).\
+        order_by(func.count(measurement_ref.id).desc()).all()
+
+    # Return the most active station id
+    most_active = session.query(
+        measurement_ref.date, measurement_ref.tobs).\
+        filter(measurement_ref.station == active_stations[0][0]).\
+        filter(measurement_ref.date >= year_ago()).all()
+
+    # Convert the query results to a dictionary
+    tobs_dict = [{value[0]: value[1]} for value in most_active]
+
+    return jsonify(tobs_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)
