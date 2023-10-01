@@ -1,4 +1,10 @@
+'''
+Module Comment here
+'''
 
+#################################################
+# Imports
+#################################################
 from flask import Flask, jsonify
 
 from sqlalchemy.ext.automap import automap_base
@@ -8,7 +14,9 @@ from sqlalchemy import create_engine, func
 import numpy as np
 import datetime as dt
 
-### SQLITE CONNECTION ###
+#################################################
+# SQLITE CONNECTION
+#################################################
 # Create an engine for the hawaii.sqlite database
 engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 
@@ -23,8 +31,10 @@ station_ref = Base.classes.station
 # Create a database session object
 session = Session(bind=engine)
 
-
-### HELPER FUNCTION: calculate year_ago ###
+#################################################
+# HELPER FUNCTION: year_ago()
+#################################################
+# Calculate one year from the latest date
 def year_ago():
     # Find the most recent date in the dataset
     latest_date = session.query(func.max(measurement_ref.date)).one()
@@ -41,12 +51,22 @@ def year_ago():
 
     return year_from_latest
 
+#################################################
+# GLOBAL VARIABLE: select_columns
+#################################################
+# Used in dynamic routes to minimise repetition (unpacking operator).
+select_columns = [func.min(measurement_ref.tobs),
+                  func.avg(measurement_ref.tobs),
+                  func.max(measurement_ref.tobs)]
 
-### Flask Setup ###
+#################################################
+# Flask Setup
 app = Flask(__name__)
+#################################################
 
-
-### Flask Routes ###
+#################################################
+# Flask Routes
+#################################################
 @app.route("/")
 def homepage():
     return(
@@ -109,10 +129,7 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def start_only(start):
     # Query to find the min, ave, and max TOBS
-    start_query = session.query(
-        func.min(measurement_ref.tobs),
-        func.avg(measurement_ref.tobs),
-        func.max(measurement_ref.tobs)).\
+    start_query = session.query(*select_columns).\
         filter(measurement_ref.date >= start).all()
 
     # Convert query results to a dictionary
@@ -126,10 +143,7 @@ def start_only(start):
 @app.route("/api/v1.0/<start>/<end>")
 def start_end(start, end):
     # Query to find the min, ave, and max TOBS
-    end_query = session.query(
-        func.min(measurement_ref.tobs),
-        func.avg(measurement_ref.tobs),
-        func.max(measurement_ref.tobs)).\
+    end_query = session.query(*select_columns).\
         filter(measurement_ref.date >= start).\
         filter(measurement_ref.date <= end).all()
 
@@ -138,7 +152,7 @@ def start_end(start, end):
         'TMIN': end_query[0][0],
         'TAVG': end_query[0][1],
         'TMAX': end_query[0][2]}]
-
+    
     return jsonify(end_dict)
 
 if __name__ == "__main__":

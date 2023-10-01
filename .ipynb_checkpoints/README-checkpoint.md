@@ -112,20 +112,28 @@ Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overv
 
 2. Create a helper function to minimise code repetition: `year_ago()` to calculate one year from the latest date.
 
-3. API Static Routes:
+3. API Static Routes: Use `jsonify()` in all return clauses.
     - __Homepage__: List all available routes.
     - __Precipitation Route__:
         - Query to retrieve the date and precipitation scores.
         - Convert to a dictionary, with the `date` as the key and `prcp` as the value.
-        - Use `jsonify()` in the return clause.
     - __Stations Route__:
-        - Querty to find the min, ave, and max TOBS.
-        - Convert to a dictionary using: `TMIN`, `TAVG`, and `TMAX` as the keys.
-        - Use `jsonify()` in the return clause.
+        - Query to get the data of all stations.
+        - Convert query results to a dictionary - provide all columns.
     - __TOBS Route__:
         - Query to find the most active station for the previous year.
         - Convert to a dictionary, to return a list of temperature observations for the previous year.
 
-4. 
+4. API Dynamic Routes:
+    - Define a global variable: `select_columns` to minimise code repetition.
+    - __Start Route__:
+        - Query to find the min, ave, and max TOBS given `<start>` as a parameter.
+        - Convert query results to a dictionary, as with the __Stations Route__.
+    - __Start/End Route__: As with the __Start Route__ with an additional parameter `<end>`.
 
 ## References
+- [1] Python unpacking operators [https://hyperskill.org/learn/step/15401](https://hyperskill.org/learn/step/15401)
+
+- [2] Python Programming Style: Module Comments [https://www.cs.cornell.edu/courses/cs1110/2022fa/materials/style/](https://www.cs.cornell.edu/courses/cs1110/2022fa/materials/style/)
+
+- 
