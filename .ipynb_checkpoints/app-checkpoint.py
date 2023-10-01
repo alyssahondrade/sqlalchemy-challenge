@@ -105,10 +105,40 @@ def tobs():
 
     return jsonify(tobs_dict)
 
-@app.route("/api/v1.0/<start>/<end>")
-def start_date(start, end):
-    return start, end
+@app.route("/api/v1.0/<start>")
+def start_only(start):
+    # Query to find the min, ave, and max TOBS
+    start_query = session.query(
+        func.min(measurement_ref.tobs),
+        func.avg(measurement_ref.tobs),
+        func.max(measurement_ref.tobs)).\
+        filter(measurement_ref.date >= start).all()
 
+    # Convert query results to a dictionary
+    start_dict = [{
+        'TMIN': start_query[0][0],
+        'TAVG': start_query[0][1],
+        'TMAX': start_query[0][2]}]
+
+    return jsonify(start_dict)
+
+@app.route("/api/v1.0/<start>/<end>")
+def start_end(start, end):
+    # Query to find the min, ave, and max TOBS
+    end_query = session.query(
+        func.min(measurement_ref.tobs),
+        func.avg(measurement_ref.tobs),
+        func.max(measurement_ref.tobs)).\
+        filter(measurement_ref.date >= start).\
+        filter(measurement_ref.date <= end).all()
+
+    # Convert query results to a dictionary
+    end_dict = [{
+        'TMIN': end_query[0][0],
+        'TAVG': end_query[0][1],
+        'TMAX': end_query[0][2]}]
+
+    return jsonify(end_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)
