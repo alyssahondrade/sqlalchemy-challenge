@@ -1,6 +1,14 @@
 '''
-Module Comment here
+This module creates a Flask API to return information on
+Honolulu's Climate, returning data on:
+1. Precipitation
+2. Temperature
+3. Stations
+
+Author: Alyssa Hondrade
+Version: 01 Oct 2023
 '''
+
 
 #################################################
 # Imports
@@ -13,6 +21,7 @@ from sqlalchemy import create_engine, func
 
 import numpy as np
 import datetime as dt
+
 
 #################################################
 # SQLITE CONNECTION
@@ -31,11 +40,14 @@ station_ref = Base.classes.station
 # Create a database session object
 session = Session(bind=engine)
 
+
 #################################################
 # HELPER FUNCTION: year_ago()
 #################################################
-# Calculate one year from the latest date
 def year_ago():
+    """
+    Calculates the date one year from the dataset's latest date.
+    """
     # Find the most recent date in the dataset
     latest_date = session.query(func.max(measurement_ref.date)).one()
 
@@ -51,6 +63,7 @@ def year_ago():
 
     return year_from_latest
 
+
 #################################################
 # GLOBAL VARIABLE: select_columns
 #################################################
@@ -59,10 +72,12 @@ select_columns = [func.min(measurement_ref.tobs),
                   func.avg(measurement_ref.tobs),
                   func.max(measurement_ref.tobs)]
 
+
 #################################################
 # Flask Setup
 app = Flask(__name__)
 #################################################
+
 
 #################################################
 # Flask Routes
