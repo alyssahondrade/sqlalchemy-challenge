@@ -55,7 +55,7 @@ def homepage():
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/&ltstart&gt<br/>"
-        f"/api/v1.0/&ltend&gt<br/>"
+        f"/api/v1.0/&ltstart&gt/&ltend&gt<br/>"
     )
 
 @app.route("/api/v1.0/precipitation")
@@ -104,6 +104,11 @@ def tobs():
     tobs_dict = [{value[0]: value[1]} for value in most_active]
 
     return jsonify(tobs_dict)
+
+@app.route("/api/v1.0/<start>")
+def start_date(start):
+    return start
+
 
 if __name__ == "__main__":
     app.run(debug=True)
