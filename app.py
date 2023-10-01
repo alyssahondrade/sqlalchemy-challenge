@@ -1,6 +1,7 @@
 '''
-This module creates a Flask API to return information on
-Honolulu's Climate, returning data on:
+This module creates a Flask API to return information on Honolulu's climate.
+
+The API returns data on:
 1. Precipitation
 2. Temperature
 3. Stations
@@ -62,15 +63,6 @@ def year_ago():
     year_from_latest = dt_date - dt.timedelta(days=366)
 
     return year_from_latest
-
-
-#################################################
-# GLOBAL VARIABLE: select_columns
-#################################################
-# Used in dynamic routes to minimise repetition (unpacking operator).
-select_columns = [func.min(measurement_ref.tobs),
-                  func.avg(measurement_ref.tobs),
-                  func.max(measurement_ref.tobs)]
 
 
 #################################################
@@ -144,6 +136,11 @@ def tobs():
 @app.route("/api/v1.0/<start>", defaults={'end': None})
 @app.route("/api/v1.0/<start>/<end>")
 def start_end(start, end):
+    # Used to minimise repetition (unpacking operator).
+    select_columns = [func.min(measurement_ref.tobs),
+                  func.avg(measurement_ref.tobs),
+                  func.max(measurement_ref.tobs)]
+
     # Query to find the min, ave, and max TOBS
     if end is None:
         startend_query = session.query(*select_columns).\

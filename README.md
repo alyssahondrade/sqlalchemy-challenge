@@ -11,13 +11,16 @@ Github repository at: [https://github.com/alyssahondrade/sqlalchemy-challenge.gi
 2. [Approach](https://github.com/alyssahondrade/sqlalchemy-challenge#approach)
     1. [Setup](https://github.com/alyssahondrade/sqlalchemy-challenge#setup)
     2. [Part 1](https://github.com/alyssahondrade/sqlalchemy-challenge#part-1)
+       1. [Reflect Tables into SQLAlchemy ORM](https://github.com/alyssahondrade/sqlalchemy-challenge#reflect-tables-into-sqlalchemy-orm)
+       2. [Exploratory Precipitation Analysis](https://github.com/alyssahondrade/sqlalchemy-challenge#exploratory-precipitation-analysis)
+       3. [Exploratory Station Analysis](https://github.com/alyssahondrade/sqlalchemy-challenge#exploratory-station-analysis)
     3. [Part 2](https://github.com/alyssahondrade/sqlalchemy-challenge#part-2)
 3. [References](https://github.com/alyssahondrade/sqlalchemy-challenge#references)
 
 ## Introduction
 
 ### Goal
-
+The goal of this project is to conduct a climate analysis of Honolulu, Hawaii, and create a Flask API to return the analysis information.
 
 ### Repository Structure
 Source code:
