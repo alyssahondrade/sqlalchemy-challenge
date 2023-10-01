@@ -136,4 +136,4 @@ Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overv
 
 - [2] Python Programming Style: Module Comments [https://www.cs.cornell.edu/courses/cs1110/2022fa/materials/style/](https://www.cs.cornell.edu/courses/cs1110/2022fa/materials/style/)
 
-- 
+- [3] Can Flask have optional URL parameters? [https://stackoverflow.com/questions/14032066/can-flask-have-optional-url-parameters](https://stackoverflow.com/questions/14032066/can-flask-have-optional-url-parameters)
