@@ -94,8 +94,11 @@ Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overv
     - Calculate the x-tick frequency to display `5` dates along the x-axis.
     - Calculate the corresponding x-tick labels.
     - Use `df.plot()` to create the plot
-    - Set the x-tick labels using: `set_xticklabels()`
-    - Relocate the legend using: `legend(loc='upper center')`
+    - Set the plot formatting:
+        - Set x- and y-labels.
+        - Set x-ticks and corresponding labels using: `set_xticklabels()`
+        - Set the y-limits using: `set_ylim()`
+        - Relocate the legend using: `legend(loc='upper center')`
 
 #### Exploratory Station Analysis
 1. Design a query to calculate the total number of stations using: `func.count()`
@@ -131,11 +134,10 @@ Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overv
         - Convert to a dictionary, to return a list of temperature observations for the previous year.
 
 4. API Dynamic Routes:
-    - Define a global variable: `select_columns` to minimise code repetition.
-    - __Start Route__:
-        - Query to find the min, ave, and max TOBS given `<start>` as a parameter.
-        - Convert query results to a dictionary, as with the __Stations Route__.
-    - __Start/End Route__: As with the __Start Route__ with an additional parameter `<end>`.
+    - Define a variable: `select_columns` to minimise code repetition.
+    - Create a function that takes both routes: __Start Route__, __Start/End Route__ with the `<end>` of `None-type` default.
+        - Query to find the min, ave, and max TOBS.
+        - Convert query results to a dictionary and return the jsonified result.
 
 ## References
 - [1] Python unpacking operators [https://hyperskill.org/learn/step/15401](https://hyperskill.org/learn/step/15401)
