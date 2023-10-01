@@ -23,6 +23,7 @@ station_ref = Base.classes.station
 # Create a database session object
 session = Session(bind=engine)
 
+
 ### HELPER FUNCTION: calculate year_ago ###
 def year_ago():
     # Find the most recent date in the dataset
@@ -68,7 +69,6 @@ def precipitation():
     # Convert the query results to a dictionary
     prcp_dict = [{value[0]: value[1]} for value in precipitation]
 
-    print(year_ago())
     return jsonify(prcp_dict)
 
 @app.route("/api/v1.0/stations")

@@ -108,6 +108,24 @@ Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overv
     - Ensure correct title, labels, and legend.
 
 ### Part 2
+1. SQLite Connection: as with __Reflect Tables into SQLAlchemy ORM__ in Part 1 above.
 
+2. Create a helper function to minimise code repetition: `year_ago()` to calculate one year from the latest date.
+
+3. API Static Routes:
+    - __Homepage__: List all available routes.
+    - __Precipitation Route__:
+        - Query to retrieve the date and precipitation scores.
+        - Convert to a dictionary, with the `date` as the key and `prcp` as the value.
+        - Use `jsonify()` in the return clause.
+    - __Stations Route__:
+        - Querty to find the min, ave, and max TOBS.
+        - Convert to a dictionary using: `TMIN`, `TAVG`, and `TMAX` as the keys.
+        - Use `jsonify()` in the return clause.
+    - __TOBS Route__:
+        - Query to find the most active station for the previous year.
+        - Convert to a dictionary, to return a list of temperature observations for the previous year.
+
+4. 
 
 ## References
