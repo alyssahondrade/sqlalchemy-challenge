@@ -24,13 +24,16 @@ The goal of this project is to conduct a climate analysis of Honolulu, Hawaii, a
 
 ### Repository Structure
 Source code:
-- [`app.py`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/app.py) contains...
-- [`climate_starter.ipynb`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/climate_starter.ipynb) contains...
+- [`app.py`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/app.py) contains the code that builds the Flask API.
+
+- [`climate_starter.ipynb`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/climate_starter.ipynb) contains the exploratory analysis on the dataset.
 
 `Resources` directory contains:
 - [`hawaii.sqlite`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii.sqlite) is the database.
-- [`hawaii_measurements.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_measurements.csv) contains...
-- [`hawaii_stations.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_stations.csv) contains...
+
+- [`hawaii_measurements.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_measurements.csv) contains the measurement dataset.
+
+- [`hawaii_stations.csv`](https://github.com/alyssahondrade/sqlalchemy-challenge/blob/main/Resources/hawaii_stations.csv) contains the station dataset.
 
 ### Dataset
 The dataset is provided by the bootcamp, sourced from:
