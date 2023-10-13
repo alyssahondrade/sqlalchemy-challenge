@@ -1,5 +1,5 @@
 # sqlalchemy-challenge
-Module 10 Challenge
+Module 10 Challenge - UWA/edX Data Analytics Bootcamp
 
 Github repository at: [https://github.com/alyssahondrade/sqlalchemy-challenge.git](https://github.com/alyssahondrade/sqlalchemy-challenge.git)
 
